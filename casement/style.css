@@ -1,0 +1,347 @@
+/* Casement: a Windows 11-inspired look for GTK 4 / libadwaita. */
+
+:root {
+  --w11-accent: #005fb8;
+  --w11-accent-fg: #ffffff;
+  --w11-tabstrip: #e9eef4;          /* mica-tinted title area */
+  --w11-toolbar: #f9f9f9;           /* active tab + toolbars */
+  --w11-content: #ffffff;
+  --w11-nav: #f9f9f9;
+  --w11-field: #ffffff;
+  --w11-border: rgba(0, 0, 0, 0.08);
+  --w11-border-strong: rgba(0, 0, 0, 0.14);
+  --w11-hover: rgba(0, 0, 0, 0.045);
+  --w11-press: rgba(0, 0, 0, 0.03);
+  --w11-selected: #cce8ff;
+  --w11-selected-hover: #b9dcf9;
+  --w11-nav-selected: rgba(0, 0, 0, 0.06);
+  --w11-text: #1b1b1b;
+  --w11-dim: #616161;
+  --w11-close-hover: #c42b1c;
+  --w11-usage: #26a0da;
+  --w11-usage-full: #da2626;
+  --w11-usage-trough: #e6e6e6;
+}
+
+/* Dark palette: the window gets .w11-dark from Adw.StyleManager. */
+window.w11-dark {
+    --w11-accent: #60cdff;
+    --w11-accent-fg: #000000;
+    --w11-tabstrip: #1f2126;
+    --w11-toolbar: #2c2c2c;
+    --w11-content: #191919;
+    --w11-nav: #202020;
+    --w11-field: #2f2f2f;
+    --w11-border: rgba(255, 255, 255, 0.07);
+    --w11-border-strong: rgba(255, 255, 255, 0.12);
+    --w11-hover: rgba(255, 255, 255, 0.06);
+    --w11-press: rgba(255, 255, 255, 0.04);
+    --w11-selected: #3d5a73;
+    --w11-selected-hover: #466681;
+    --w11-nav-selected: rgba(255, 255, 255, 0.07);
+    --w11-text: #ffffff;
+    --w11-dim: #c5c5c5;
+    --w11-usage-trough: #3a3a3a;
+}
+
+window.w11 {
+  font-family: "Segoe UI Variable Text", "Segoe UI", "Inter", "Cantarell", sans-serif;
+  font-size: 10pt;
+  color: var(--w11-text);
+  background-color: var(--w11-content);
+}
+
+window.w11 .w11-dim { color: var(--w11-dim); }
+window.w11 .w11-accent-icon { color: var(--w11-accent); }
+
+/* ------------------------------------------------------------ tab strip */
+
+.w11-tabstrip {
+  background-color: var(--w11-tabstrip);
+  min-height: 42px;
+  padding-left: 8px;
+}
+
+.w11-tab {
+  min-height: 34px;
+  margin-top: 8px;
+  padding: 0 4px 0 12px;
+  border-radius: 8px 8px 0 0;
+  transition: background-color 120ms;
+}
+.w11-tab:hover { background-color: var(--w11-hover); }
+.w11-tab.active {
+  background-color: var(--w11-toolbar);
+  box-shadow: 0 -1px 0 var(--w11-border-strong) inset, 0 0 0 1px var(--w11-border);
+  box-shadow: none;
+}
+.w11-tab-close {
+  min-width: 24px; min-height: 24px;
+  padding: 0;
+  border-radius: 4px;
+  -gtk-icon-size: 12px;
+}
+.w11-newtab {
+  margin-top: 6px;
+  min-width: 30px; min-height: 30px;
+  padding: 0;
+  border-radius: 4px;
+  -gtk-icon-size: 14px;
+}
+
+/* Square window controls with the red close hover */
+.w11-tabstrip windowcontrols { margin: 0; }
+.w11-tabstrip windowcontrols > button {
+  min-width: 46px;
+  min-height: 32px;
+  padding: 0;
+  margin: 0;
+  border-radius: 0;
+  background: none;
+  box-shadow: none;
+}
+.w11-tabstrip windowcontrols > button > image {
+  background: none;
+  box-shadow: none;
+  padding: 0;
+  -gtk-icon-size: 12px;
+}
+.w11-tabstrip windowcontrols > button:hover { background-color: var(--w11-hover); }
+.w11-tabstrip windowcontrols > button:active { background-color: var(--w11-press); }
+.w11-tabstrip windowcontrols > button.close:hover {
+  background-color: var(--w11-close-hover);
+  color: white;
+}
+window.w11:not(.maximized) .w11-tabstrip windowcontrols > button.close { border-top-right-radius: 12px; }
+
+/* ------------------------------------------------------------ nav bar */
+
+.w11-navbar {
+  background-color: var(--w11-toolbar);
+  padding: 6px 10px 6px 8px;
+}
+.w11-navbtn {
+  min-width: 34px; min-height: 32px;
+  padding: 0;
+  border-radius: 4px;
+}
+
+.w11-address {
+  background-color: var(--w11-field);
+  border: 1px solid var(--w11-border-strong);
+  border-radius: 4px;
+  min-height: 30px;
+}
+.w11-address.editing { border-bottom: 2px solid var(--w11-accent); }
+.w11-address entry { background: none; box-shadow: none; min-height: 28px; padding-left: 8px; }
+.w11-crumb {
+  min-height: 26px;
+  padding: 0 6px;
+  border-radius: 3px;
+  font-weight: normal;
+}
+.w11-chevron, .w11-addr-btn {
+  min-height: 26px;
+  min-width: 18px;
+  padding: 0 2px;
+  border-radius: 3px;
+  -gtk-icon-size: 12px;
+}
+.w11-chevron > button, .w11-addr-btn > button {
+  min-height: 26px; min-width: 18px; padding: 0 2px; border-radius: 3px;
+}
+.w11-menu-row { padding: 4px 10px; border-radius: 4px; font-weight: normal; }
+
+.w11-search {
+  background-color: var(--w11-field);
+  border: 1px solid var(--w11-border-strong);
+  border-radius: 4px;
+  min-height: 30px;
+  margin-left: 6px;
+}
+.w11-search:focus-within { border-bottom: 2px solid var(--w11-accent); outline: none; }
+
+/* ------------------------------------------------------------ command bar */
+
+.w11-cmdbar {
+  background-color: var(--w11-toolbar);
+  border-bottom: 1px solid var(--w11-border);
+  padding: 4px 10px 6px 10px;
+  min-height: 40px;
+}
+.w11-cmdbar separator { margin: 8px 6px; background-color: var(--w11-border-strong); min-width: 1px; }
+.w11-cmd, .w11-cmd > button {
+  min-height: 34px;
+  min-width: 34px;
+  padding: 0 8px;
+  border-radius: 4px;
+  font-weight: normal;
+}
+.w11-cmd:disabled, .w11-cmd > button:disabled { opacity: 0.45; }
+.w11-cmd:checked { background-color: var(--w11-hover); }
+
+/* ------------------------------------------------------------ nav pane */
+
+.w11-nav, .w11-navlist {
+  background-color: var(--w11-nav);
+}
+.w11-navlist { padding: 6px 4px; }
+.w11-navlist > row {
+  min-height: 30px;
+  margin: 1px 2px;
+  padding: 0 4px 0 0;
+  border-radius: 4px;
+  outline: none;
+}
+.w11-navlist > row:hover { background-color: var(--w11-hover); }
+.w11-navlist > row.w11-sep, .w11-navlist > row.w11-sep:hover { min-height: 0; background: none; }
+.w11-navlist > row.w11-sep separator { min-height: 1px; background-color: var(--w11-border-strong); }
+.w11-navlist > row.current {
+  background-color: var(--w11-nav-selected);
+  color: var(--w11-text);
+}
+.w11-navlist > row.current .w11-pill { background-color: var(--w11-accent); }
+.w11-pill { border-radius: 2px; margin-right: 2px; }
+.w11-expander {
+  min-width: 20px; min-height: 20px;
+  padding: 0;
+  border-radius: 3px;
+  -gtk-icon-size: 10px;
+}
+.w11-paned > separator { background-color: var(--w11-border); min-width: 1px; }
+
+/* ------------------------------------------------------------ file views */
+
+.w11-content, .w11-folderview, .w11-page { background-color: var(--w11-content); }
+
+/* Side spacing lives on the column view itself so the header and the rows
+   always get exactly the same width (otherwise the last column overflows the
+   row highlight). */
+columnview.w11-details {
+  background-color: var(--w11-content);
+  margin: 0 6px;
+}
+columnview.w11-details > header {
+  background-color: var(--w11-content);
+  box-shadow: none;
+  border-bottom: none;
+  padding: 0;
+}
+columnview.w11-details > header > button {
+  font-weight: normal;
+  color: var(--w11-dim);
+  padding: 6px 8px;
+  border-radius: 0;
+  box-shadow: none;
+  border-right: 1px solid var(--w11-border);
+  background: none;
+}
+columnview.w11-details > header > button:hover { background-color: var(--w11-hover); }
+/* Bottom padding leaves empty space to right-click even in a full folder. */
+columnview.w11-details > listview { background-color: var(--w11-content); padding: 0 0 60px 0; }
+columnview.w11-details > listview > row {
+  min-height: 30px;
+  border-radius: 4px;
+  padding: 0;
+  margin: 1px 0;
+}
+window.w11-compact columnview.w11-details > listview > row { min-height: 22px; margin: 0; }
+columnview.w11-details > listview > row > cell { padding: 0 8px; }
+columnview.w11-details > listview > row:hover { background-color: var(--w11-hover); }
+columnview.w11-details > listview > row:selected {
+  background-color: var(--w11-selected);
+  color: var(--w11-text);
+}
+columnview.w11-details > listview > row:selected:hover { background-color: var(--w11-selected-hover); }
+columnview.w11-details > listview > row:focus-visible,
+columnview.w11-details > listview > row:focus { outline: 1px solid var(--w11-border-strong); outline-offset: -1px; }
+
+gridview.w11-grid { background-color: var(--w11-content); padding: 8px 8px 60px 8px; }
+gridview.w11-grid > child {
+  border-radius: 4px;
+  padding: 6px 4px;
+  margin: 2px;
+}
+window.w11-compact gridview.w11-grid > child { padding: 2px; margin: 1px; }
+gridview.w11-grid.w11-row > child, gridview.w11-grid.w11-tile > child { padding: 3px 6px; }
+gridview.w11-grid > child:hover { background-color: var(--w11-hover); }
+gridview.w11-grid > child:selected { background-color: var(--w11-selected); color: var(--w11-text); }
+gridview.w11-grid > child:selected:hover { background-color: var(--w11-selected-hover); }
+
+.w11-thumb { border-radius: 2px; }
+entry.w11-rename {
+  min-height: 24px;
+  padding: 0 4px;
+  border-radius: 3px;
+  background-color: var(--w11-field);
+  box-shadow: inset 0 0 0 1px var(--w11-border-strong);
+  border-bottom: 2px solid var(--w11-accent);
+  outline: none;
+}
+.w11-cut { opacity: 0.5; }
+.w11-drop-target { background-color: var(--w11-selected); border-radius: 4px; }
+rubberband {
+  background-color: alpha(#0078d4, 0.18);
+  border: 1px solid #0078d4;
+  border-radius: 0;
+}
+.w11-placeholder { color: var(--w11-dim); }
+
+/* ------------------------------------------------------------ home / this pc */
+
+.w11-section-header {
+  font-weight: 600;
+  font-size: 11pt;
+  padding: 4px 6px;
+  margin-top: 6px;
+  border-radius: 4px;
+}
+.w11-section-header image { -gtk-icon-size: 12px; }
+flowbox.w11-tiles { padding: 4px 0; }
+flowbox.w11-tiles > flowboxchild.w11-tile {
+  padding: 8px 10px;
+  border-radius: 6px;
+}
+flowbox.w11-tiles > flowboxchild.w11-tile:hover { background-color: var(--w11-hover); }
+flowbox.w11-tiles > flowboxchild.w11-tile:selected { background-color: var(--w11-selected); color: var(--w11-text); }
+
+levelbar.w11-usage trough { min-height: 12px; border-radius: 0; background-color: var(--w11-usage-trough); padding: 0; border: 1px solid var(--w11-border-strong); }
+levelbar.w11-usage block.filled { background-color: var(--w11-usage); border-radius: 0; }
+levelbar.w11-usage.w11-usage-full block.filled { background-color: var(--w11-usage-full); }
+levelbar.w11-usage block.empty { background: none; }
+
+list.w11-recent { background: none; }
+list.w11-recent > row { min-height: 30px; border-radius: 4px; }
+list.w11-recent > row:hover { background-color: var(--w11-hover); }
+list.w11-recent > row:selected { background-color: var(--w11-selected); color: var(--w11-text); }
+.w11-recent-header { color: var(--w11-dim); padding: 6px 0; border-bottom: 1px solid var(--w11-border); }
+
+/* ------------------------------------------------------------ right pane / status */
+
+.w11-rightpane { background-color: var(--w11-content); }
+.w11-textpreview { background: none; font-size: 9pt; }
+
+.w11-status {
+  background-color: var(--w11-content);
+  padding: 0 8px 0 14px;
+  min-height: 28px;
+  font-size: 9pt;
+}
+.w11-status-btn { min-width: 26px; min-height: 22px; padding: 0; border-radius: 3px; -gtk-icon-size: 14px; }
+.w11-status-btn:checked { background-color: var(--w11-hover); color: var(--w11-accent); }
+
+.w11-jobs {
+  background-color: var(--w11-toolbar);
+  border-top: 1px solid var(--w11-border);
+  padding: 8px 14px;
+}
+.w11-jobs progressbar trough { min-height: 4px; }
+.w11-jobs progressbar progress { min-height: 4px; background-color: #06b025; }
+
+/* ------------------------------------------------------------ menus */
+
+popover.menu > contents, popover.w11-crumb-menu > contents {
+  border-radius: 8px;
+  padding: 4px;
+}
+popover.menu modelbutton { min-height: 30px; border-radius: 4px; padding: 0 12px; }

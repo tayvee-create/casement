@@ -1,0 +1,13 @@
+[Desktop Entry]
+Type=Application
+Name=Casement
+GenericName=File Manager
+Comment=Browse your files in a Windows 11-style file manager
+Exec=casement %U
+Icon=io.github.tayvee_create.Casement
+Terminal=false
+Categories=GTK;GNOME;Utility;Core;FileManager;
+MimeType=inode/directory;
+StartupNotify=true
+StartupWMClass=io.github.tayvee_create.Casement
+Keywords=folder;manager;explore;explorer;disk;filesystem;files;

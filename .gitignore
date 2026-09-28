@@ -1,0 +1,10 @@
+# Python's compiled cache: recreated automatically, never worth saving
+__pycache__/
+*.pyc
+
+# Editor and system clutter
+*.swp
+*~
+.DS_Store
+.vscode/
+.idea/
