@@ -246,12 +246,17 @@ class HomePage(_Page):
             spacer = Gtk.Box()
             spacer.set_size_request(16, -1)
             name_box.append(spacer)
-        name_box.append(Gtk.Label(label=name, xalign=0, ellipsize=Pango.EllipsizeMode.END))
+        # max_width_chars=1 stops an ellipsized label asking for its full text width,
+        # so every row gets the same column widths and lines up with the header.
+        name_box.append(Gtk.Label(label=name, xalign=0, ellipsize=Pango.EllipsizeMode.END,
+                                  max_width_chars=1, hexpand=True))
         name_box.set_size_request(260, -1)
         row.append(name_box)
         for text, width in ((date, 150), (location, 280)):
-            lbl = Gtk.Label(label=text, xalign=0, ellipsize=Pango.EllipsizeMode.END)
+            lbl = Gtk.Label(label=text, xalign=0, ellipsize=Pango.EllipsizeMode.END, max_width_chars=1)
             lbl.set_size_request(width, -1)
+            if not header and text:
+                lbl.set_tooltip_text(text)
             if not header:
                 lbl.add_css_class("w11-dim")
             row.append(lbl)
