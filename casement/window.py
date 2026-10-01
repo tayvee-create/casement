@@ -430,6 +430,9 @@ class ExplorerWindow(Adw.ApplicationWindow):
         s3.append_item(_menu_item("Connect to server…", "win.connect-server"))
         s3.append_item(_menu_item("Properties", "win.properties"))
         menu.append_section(None, s3)
+        s_recent = Gio.Menu()
+        s_recent.append_item(_menu_item("Clear recent docs list", "win.clear-recent"))
+        menu.append_section(None, s_recent)
         s4 = Gio.Menu()
         s4.append_item(_menu_item("Keyboard shortcuts", "app.shortcuts"))
         s4.append_item(_menu_item("About Casement", "app.about"))
@@ -566,6 +569,7 @@ class ExplorerWindow(Adw.ApplicationWindow):
         A("open-uri", lambda uri: self.launch_files([Gio.File.new_for_uri(uri)]), "s")
         A("open-file-location", lambda uri: self._open_file_location(uri), "s")
         A("remove-recent", lambda uri: self._remove_recent(uri), "s")
+        A("clear-recent", lambda _: self.clear_recent())
 
         s = self.settings
         A("view-mode", self._set_view_mode, "s", GLib.Variant("s", "details"))
@@ -1704,6 +1708,20 @@ class ExplorerWindow(Adw.ApplicationWindow):
             Gtk.RecentManager.get_default().remove_item(uri)
         except GLib.Error:
             pass
+
+    def clear_recent(self):
+        dialogs.confirm(self, "Clear recent docs list",
+                        "This clears the list of recently opened files, here and in other apps such as Files. "
+                        "The files themselves won't be deleted.",
+                        "Clear", self._clear_recent)
+
+    def _clear_recent(self):
+        try:
+            Gtk.RecentManager.get_default().purge_items()
+        except GLib.Error as e:
+            self.toast(f"Couldn't clear the recent list: {e.message}")
+            return
+        self.toast("Recent docs list cleared")
 
     def toast(self, text, button=None, action=None):
         t = Adw.Toast(title=text, timeout=4)
