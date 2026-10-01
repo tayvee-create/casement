@@ -4,6 +4,10 @@ A GNOME file manager inspired by the Windows 11 File Explorer. The name comes fr
 the casement, a window that opens on hinges.
 Written in Python with GTK 4 and libadwaita. There is nothing to compile.
 
+![The Casement Home page, showing Quick access folders and recent files](screenshots/home.png)
+
+![A Documents folder open in Details view, with tabs, the address bar and the command bar](screenshots/documents.png)
+
 ## Run
 
 ```sh
